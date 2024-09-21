@@ -189,11 +189,10 @@ if (grepl('gfm', output_format)) {
   saveWidget(mapa, file = html_file, selfcontained = TRUE)
   
   # Toma una captura del archivo HTML
-  tmp_file <- tempfile(fileext = ".png")
-  webshot2::webshot(url = html_file, file = tmp_file, vwidth = 800, vheight = 600)
+  webshot2::webshot(url = html_file, file = 'mapa-demo.png', vwidth = 800, vheight = 600)
   
   # Incluye la imagen capturada en el documento
-  knitr::include_graphics(tmp_file)
+  knitr::include_graphics('mapa-demo.png')
 } else {
   # Si la salida es HTML, imprime el objeto mapa normalmente
   mapa
