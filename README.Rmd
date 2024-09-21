@@ -560,12 +560,25 @@ abline(lm(var2 ~ var1), col = 'red')
 
 # Ejercicio 5. Çonstruye un modelo por medio de regresión lineal simple
 
-Usando el par de variables con el mayor valor absoluto del coeficiente de correlación de Pearson, construye un modelo de regresión lineal simple asistiéndote por R para los cálculos. Elige una variable respuesta o dependiente (lado izquierdo de la ecuación) y una variable independiente o predictora (lado derecho de la ecuación).
+Usando el par de variables con el mayor valor absoluto del coeficiente de correlación de Pearson, construye un modelo de regresión lineal simple ayudándote de R para los cálculos. Elige una variable respuesta o dependiente (lado izquierdo de la ecuación) y una variable independiente o predictora (lado derecho de la ecuación).
+
+Un modelo de regresión líneal simple se compone de los siguientes términos:
+
+$y = \beta_0 + \beta_1 x + \varepsilon$
+
+Donde:
+
+- $y$ es la variable dependiente.
+- $x$ es la variable independiente.
+- $\beta_0$ es el intercepto o término constante, que representa el valor esperado de $y$ cuando $x = 0$.
+- $\beta_1$ es el coeficiente de la variable independiente, que representa el cambio esperado en $y$ por cada unidad de cambio en $x$.
+- $\varepsilon$ es el término de error, que representa la variación de $y$ no explicada por la relación lineal con $x$.
+
+Es habitual acompañar el modelo de una batería de pruebas estadísticas, además de que antes de calcularlo se verifican varios supuestos. Tan pronto se obtiene un modelo candidato (o varios), se realizan múltiples diagnósticos para evaluar el poder predictivo, y se detemrinan cuáles son las observaciones influyentes y los posibles valores atípicos, entre otras evaluaciones. Para aligerar los cálculos en este ejercicio, estima solamente el coeficiente $\beta_1$ y el intercepto $\beta_0$, e ignora por ahora el término de error. Las pruebas y los diagnósticos formarán parte de una práctica posterior. 
 
 Haré una demostración de cómo se generaría un modelo de regresión lineal simple a mano con el par de variables que mayor valor absoluto obtuvo en el coeficiente de correlación de Pearson, que fueron CGIAR-ELEVACION (elevación) y CHELSA_bio1_1981-2010_V21 (temperatura media anual).
 
 Usaremos los valores de elevación como \( x \) (variable independiente) y los valores de temperatura como \( y \) (variable dependiente), pero en tu caso debes elegir los que correspondan. Sigamos los pasos para estimar los coeficientes de la regresión lineal simple, \( \beta_0 \) y \( \beta_1 \).
-
 
 1. Recopilación de los datos
 

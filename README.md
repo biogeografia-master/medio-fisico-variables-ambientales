@@ -3,7 +3,7 @@ correlación y regresión<small><br>Biogeografía (GEO-131)<br>Universidad
 Autónoma de Santo Domingo (UASD)<br>Semestre 2024-02</small>
 ================
 El Tali
-2024-09-20
+2024-09-21
 
 Versión HTML (quizá más legible),
 [aquí](https://biogeografia-master.github.io/medio-fisico-variables-ambientales/README.html)
@@ -279,7 +279,7 @@ if (grepl('gfm', output_format)) {
 }
 ```
 
-<img src="../../../../../../tmp/RtmpgM6zJJ/file9b31614840a37.png" width="100%" />
+<img src="../../../../../../tmp/RtmpN8MBGU/file9d42829307c17.png" width="100%" />
 
 # Instrucciones generales que aplican a todos los ejercicios.
 
@@ -728,9 +728,35 @@ abline(lm(var2 ~ var1), col = 'red')
 
 Usando el par de variables con el mayor valor absoluto del coeficiente
 de correlación de Pearson, construye un modelo de regresión lineal
-simple asistiéndote por R para los cálculos. Elige una variable
-respuesta o dependiente (lado izquierdo de la ecuación) y una variable
-independiente o predictora (lado derecho de la ecuación).
+simple ayudándote de R para los cálculos. Elige una variable respuesta o
+dependiente (lado izquierdo de la ecuación) y una variable independiente
+o predictora (lado derecho de la ecuación).
+
+Un modelo de regresión líneal simple se compone de los siguientes
+términos:
+
+$y = \beta_0 + \beta_1 x + \varepsilon$
+
+Donde:
+
+- $y$ es la variable dependiente.
+- $x$ es la variable independiente.
+- $\beta_0$ es el intercepto o término constante, que representa el
+  valor esperado de $y$ cuando $x = 0$.
+- $\beta_1$ es el coeficiente de la variable independiente, que
+  representa el cambio esperado en $y$ por cada unidad de cambio en $x$.
+- $\varepsilon$ es el término de error, que representa la variación de
+  $y$ no explicada por la relación lineal con $x$.
+
+Es habitual acompañar el modelo de una batería de pruebas estadísticas,
+además de que antes de calcularlo se verifican varios supuestos. Tan
+pronto se obtiene un modelo candidato (o varios), se realizan múltiples
+diagnósticos para evaluar el poder predictivo, y se detemrinan cuáles
+son las observaciones influyentes y los posibles valores atípicos, entre
+otras evaluaciones. Para aligerar los cálculos en este ejercicio, estima
+solamente el coeficiente $\beta_1$ y el intercepto $\beta_0$, e ignora
+por ahora el término de error. Las pruebas y los diagnósticos formarán
+parte de una práctica posterior.
 
 Haré una demostración de cómo se generaría un modelo de regresión lineal
 simple a mano con el par de variables que mayor valor absoluto obtuvo en
