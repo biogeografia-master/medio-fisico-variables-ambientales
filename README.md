@@ -571,6 +571,14 @@ vectores:
     - 1948.86, 42.51, 89.28, 19.13, 654.14, 231.23, 622.91, 238.35,
       287.03, 427.51
 
+> Nota. Cometí el error de elegir estas dos variables, cuando realmente
+> debí elegir `CHELSA_bio1_1981-2010_V21` y
+> `CHELSA_bio10_1981-2010_V21`, que tienen la correlación con el mayor
+> valor abosluto. Para evitar transformar las demostraciones
+> sensiblemente, dado que ya hay personas elaborando la práctica, no
+> cambiaré la selección de variables, y valga esta nota como fe de
+> erratas. Gracias a Sebatian Bocio por apuntar el error.
+
 A continuación incluyo una demostración de cómo calcular el coeficiente
 de correlación de Pearson son esos vectores.
 
