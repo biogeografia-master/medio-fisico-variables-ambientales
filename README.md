@@ -606,64 +606,63 @@ $$
  $$
 
 $$
-   \overline{X} = 23.28
-   $$
+ \overline{X} = 23.28
+ $$
 
 $$
-   \overline{Y} = \frac{1948.86 + 42.51 + \ldots + 427.51}{10}
-   $$
+ \overline{Y} = \frac{1948.86 + 42.51 + \ldots + 427.51}{10}
+ $$
 
 $$
-   \overline{Y} = 456.89
-   $$
+ \overline{Y} = 456.89
+ $$
 
 2.  **Calcular las desviaciones de cada valor respecto a sus medias**:
 
     Ejemplo para el primer valor:
 
-    $$
-    (X_1 - \overline{X}) = 15.05 - 23.28 = -8.23
-    $$
+$$
+ (X_1 - \overline{X}) = 15.05 - 23.28 = -8.23
+ $$
 
-    $$
-    (Y_1 - \overline{Y}) = 1948.86 - 456.89 = 1491.97
-    $$
+$$
+ (Y_1 - \overline{Y}) = 1948.86 - 456.89 = 1491.97
+ $$
 
-    Repite este cálculo para cada par de valores.
+Repite este cálculo para cada par de valores.
 
 3.  **Calcular los productos de las desviaciones**
     $(X_i - \overline{X})(Y_i - \overline{Y})$:
 
     Para el primer valor:
 
-    $$
-    (-8.23) \times (1491.97) = -12272.89
-    $$
+$$
+ (-8.23) \times (1491.97) = -12272.89
+ $$
 
-    Repite este cálculo para todos los pares y luego suma los
-    resultados.
+Repite este cálculo para todos los pares y luego suma los resultados.
 
 4.  **Calcular los cuadrados de las desviaciones y sumarlos**:
 
     Para $X$:
 
-    $$
-    (X_1 - \overline{X})^2 = (-8.23)^2 = 67.74
-    $$
+$$
+ (X_1 - \overline{X})^2 = (-8.23)^2 = 67.74
+ $$
 
-    Para $Y$:
+Para $Y$:
 
-    $$
-    (Y_1 - \overline{Y})^2 = (1491.97)^2 = 2225812.68
-    $$
+$$
+ (Y_1 - \overline{Y})^2 = (1491.97)^2 = 2225812.68
+ $$
 
-    Repite y suma los valores para ambos vectores.
+Repite y suma los valores para ambos vectores.
 
 5.  **Retomando la fórmula del coeficiente de correlación de Pearson**:
 
-    $$
-    r = \frac{\sum (X_i - \overline{X})(Y_i - \overline{Y})}{\sqrt{\sum (X_i - \overline{X})^2 \sum (Y_i - \overline{Y})^2}}
-    $$
+$$
+ r = \frac{\sum (X_i - \overline{X})(Y_i - \overline{Y})}{\sqrt{\sum (X_i - \overline{X})^2 \sum (Y_i - \overline{Y})^2}}
+ $$
 
 6.  Tenemos los siguientes valores calculados y sustituimos en la
     fórmula.
