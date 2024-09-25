@@ -730,7 +730,7 @@ abline(lm(var2 ~ var1), col = 'red')
 
 > No olvides tu párrafo al final del ejercicio.
 
-# Ejercicio 5. Çonstruye un modelo por medio de regresión lineal simple
+# Ejercicio 5. Construye un modelo por medio de regresión lineal simple
 
 Usando el par de variables con el mayor valor absoluto del coeficiente
 de correlación de Pearson, construye un modelo de regresión lineal
