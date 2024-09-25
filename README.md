@@ -3,7 +3,7 @@ correlación y regresión<small><br>Biogeografía (GEO-131)<br>Universidad
 Autónoma de Santo Domingo (UASD)<br>Semestre 2024-02</small>
 ================
 El Tali
-2024-09-21
+2024-09-25
 
 Versión HTML (quizá más legible),
 [aquí](https://biogeografia-master.github.io/medio-fisico-variables-ambientales/README.html)
@@ -601,21 +601,21 @@ donde:
 1.  **Calcular las medias de los vectores** ($\overline{X}$ y
     $\overline{Y}$):
 
-    $$
-    \overline{X} = \frac{15.05 + 26.05 + \ldots + 24.35}{10}
-    $$
+$$
+ \overline{X} = \frac{15.05 + 26.05 + \ldots + 24.35}{10}
+ $$
 
-    $$
-    \overline{X} = 23.28
-    $$
+$$
+   \overline{X} = 23.28
+   $$
 
-    $$
-    \overline{Y} = \frac{1948.86 + 42.51 + \ldots + 427.51}{10}
-    $$
+$$
+   \overline{Y} = \frac{1948.86 + 42.51 + \ldots + 427.51}{10}
+   $$
 
-    $$
-    \overline{Y} = 456.89
-    $$
+$$
+   \overline{Y} = 456.89
+   $$
 
 2.  **Calcular las desviaciones de cada valor respecto a sus medias**:
 

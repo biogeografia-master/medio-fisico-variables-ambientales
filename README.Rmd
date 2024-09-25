@@ -3,16 +3,16 @@ title: "Prácticas de aula (PA05): Medio físico, variables ambientales, correla
 author: "El Tali"
 date: "`r format(Sys.Date(), '%Y-%m-%d')`"
 output:
-  # bookdown::github_document2:
-  #   number_sections: false
-  #   fig_caption: yes
-  bookdown::html_document2:
+  bookdown::github_document2:
     number_sections: false
-    code_folding: show
     fig_caption: yes
-    md_extensions: "-fancy_lists"
-    toc: true
-    toc_depth: 3
+  # bookdown::html_document2:
+  #   number_sections: false
+  #   code_folding: show
+  #   fig_caption: yes
+  #   md_extensions: "-fancy_lists"
+  #   toc: true
+  #   toc_depth: 3
 editor_options:
   chunk_output_type: console
 always_allow_html: true
@@ -445,9 +445,9 @@ donde:
 
 1. **Calcular las medias de los vectores** (\( \overline{X} \) y \( \overline{Y} \)):
 
-   \[
-   \overline{X} = \frac{15.05 + 26.05 + \ldots + 24.35}{10}
-   \]
+ \[
+ \overline{X} = \frac{15.05 + 26.05 + \ldots + 24.35}{10}
+ \]
 
    \[
    \overline{X} = 23.28
