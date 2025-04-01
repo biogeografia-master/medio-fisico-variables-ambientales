@@ -3,14 +3,14 @@ correlación y regresión<small><br>Biogeografía (GEO-131)<br>Universidad
 Autónoma de Santo Domingo (UASD)<br>Semestre 2024-02</small>
 ================
 El Tali
-2024-09-25
+2025-04-01
 
 Versión HTML (quizá más legible),
 [aquí](https://biogeografia-master.github.io/medio-fisico-variables-ambientales/README.html)
 
 # Fecha/hora de entrega
 
-**25 de septiembre de 2024, 11:59 pm.**
+**23 de marzo de 2024, 11:59 pm.**
 
 # Introducción
 
@@ -22,10 +22,18 @@ ambientales. Todo ecosistema tiene una “parte dura” (que puede ser
 relativamente estática o dinámica) sobre o dentro de la cual ocurren las
 interacciones entre especies que conforman nuestra comunidad ecológica.
 Todos los lugares del planeta disponen, en la actualidad, de alguna
-forma de información. El objetivo es poder reunir variables de esa
+forma de dato ambiental. El objetivo es poder reunir variables de esa
 “parte dura”, y organizarlas en una forma matricial, donde las filas
 sean “sitios” y las columnas sean “variables”; a este producto le
-llamaremos “matriz ambiental”.
+llamaremos “matriz ambiental”. Es importante no olvidar lo siguiente:
+todas las variables que reunamos, deberían ser relevantes para el
+estudio que se pretende hacer; para delimitar si una variable es o no
+relevante para el estudio, bastará con mirar los objetivos del estudio,
+así como el estado del conocimiento sobre las técnicas comúnmenete
+usadas para satisfacer dichos objetivos. También es importante recordar
+que no todas las variables que se pueden medir o reunir en fuentes
+externas son relevantes para un estudio, y no todas las variables
+relevantes para un estudio se pueden medir o colectar.
 
 Dado que es común que las variables ambientales se correlacionen entre
 sí, en este ejercicio también es importante identificar la magnitud y
@@ -39,29 +47,56 @@ afecta la estabilidad de los coeficientes estimados y su interpretación.
 Por tanto, evaluar la correlación entre variables es un paso clave para
 decidir cuáles deben ser incluidas en un análisis más profundo y cuáles
 pueden ser excluidas o transformadas para mejorar la robustez del
-modelo.
+modelo. Aunque en este ejercicio no lo verás, existen técnicas para
+evaluar si existe colinealidad entre las variables incluidas en una
+regresión (e.g. *variance inflation factor*).
 
 En cuanto a la forma de almacenar los datos sobre variables ambientales,
 remarco lo estrictamente necesario que debes saber sobre los modelos de
-datos en información geográfica. Aunque también hay información en el
-modelo de datos vectorial, la mayor parte de la información del medio
-físico disponible en repositorios globales de información geoespacial
-(uno que centraliza mucha información es Google Earth Engine, pero hay
-varios), se encuentra almacenadas en archivos del modelo de datos
-ráster. En el caso más simple, un ráster es una matriz de $n$ filas por
-$m$ columnas, que forman celdas distribuidas de forma regular siguiendo
-un sistema de coordenadas de referencia, donde cada celda representa el
-valor de una variable sobre el territorio. Una realización muy popular
-de los rásters son las “fotos” que capturas con un móvil. No obstante,
-los rásters que informan sobre el medio físico pueden complicarse “todo
-lo que queramos”. **En un ráster, sólo se almacenan valores numéricos,
-pero la variable representada puede ser cualitativa o cuantitativa**.
+datos en información geográfica. Aunque también hay información
+geoespacial almacenada en el modelo de datos vectorial, la mayor parte
+de la información espacialmente continua del medio físico disponible en
+repositorios globales de información geoespacial (por ejemplo, un
+repositorio que centraliza mucha información es Google Earth Engine,
+pero hay varios), se encuentra almacenada en archivos del modelo de
+datos ráster. En el caso más simple, un ráster es una matriz de $n$
+filas por $m$ columnas, que forman celdas distribuidas de forma regular
+siguiendo un sistema de coordenadas de referencia, donde cada celda
+representa el valor de una variable sobre el territorio. Una realización
+muy popular de los rásters son las “fotos” que capturas con un móvil. No
+obstante, los rásters que informan sobre el medio físico pueden
+complicarse “todo lo que queramos”. **En un ráster, sólo se almacenan
+valores numéricos, pero la variable representada puede ser cualitativa o
+cuantitativa**.
 
 Si la variable es cuantitativa, los valores en el ráster se almacenarán
-de acuerdo a un factor de escala y a un *offset* o desplazamiento. Por
-ejemplo, supongamos que tienes un valor de temperatura para la capa
-bioclimática **bio1 (mean annual air temperature)** o **temperatura
-media anual del aire**, y deseas interpretarlo correctamente en °C.
+de acuerdo a un factor de escala y a un *offset* o desplazamiento.
+Algunas programas de escritorio (basados en la biblioteca GDAL 2.3 o
+superior), como las versiones más recientes de QGIS, y paquetes de R,
+como `stars`, son capaces de reconocer estos parámetros (pues están
+grabados en el encabezado del archivo ráster), y realizar la conversión
+por nosotros. Dado que en esta práctica, usarás el paquete `raster`, el
+cual no reconoce el factor de escala y el *offset*, tendrás que aplicar
+la corrección por tu cuenta.
+
+> De manera general, en un contexto de producción o análisis de datos,
+> resulta **imprescindible** explorar cualquier ráster antes de realizar
+> operaciones con él. Explorándolo, descubrirás si existen factores de
+> escala y *offset* que deberías aplicar para interpretar correctamente
+> los valores almacenados en las celdas. En la práctica, esto implica
+> abrir el archivo en el programa en el que lo analizarás (como digo,
+> algunos programas identifican la corrección que debe aplicarse, y lo
+> hacen automáticamente, pero otros no), obtener el rango de valores, y
+> consultar la documentación de la fuente de datos para determinar
+> cuáles son los valores de factor de escala y *offset* que deberás
+> usar.
+
+Para comprender cómo usar el factor de escala y el *offset*, pongo a
+continuación un ejemplo en el que dispones de un valor de temperatura
+para la capa bioclimática **bio1 (mean annual air temperature)** o
+**temperatura media anual del aire** del conjunto de datos CHELSA (Brun,
+Philipp et al. 2022), y deseas interpretarlo correctamente en °C. Veamos
+cómo se hacer:
 
 > **Ejemplo:**
 >
@@ -81,7 +116,7 @@ media anual del aire**, y deseas interpretarlo correctamente en °C.
 > - 290 Kelvin - 273.15 = 16.85 °C
 >
 > **Interpretación:** El valor final, **16.85 °C**, representa la
-> temperatura media anual del aire para ese punto geográfico, calculada
+> temperatura media anual del aire para ese punto geográfico, estimada
 > como el promedio diario a lo largo de un año.
 
 Por otro lado , si la variable es cualitativa, el ráster de todas formas
@@ -97,8 +132,12 @@ vectorial es un límite de tierra firme de República Dominicana, de GADM
 (investiga qué es GADM). El resto son rásters casi todos recortados para
 el territorio emergido de República Dominicana.
 
-Todos los archivos se localizan en el directorio `compartidos`,
-subdirectorio `geo131-pa05` en tu cuenta del servidor RStudio.
+Todos los archivos se encuentran en este mismo repositorio, el cual
+puedes clonar si lo deseas ya los tendrás disponibles de manera directa.
+Sin embargo, si estás trabajando en mi servidor RStudio, los archivos
+fuente se localizan también en tu directorio “casa” (para verlo, navega
+en el panel de `Files` hasta el directorio del nivel más alto), y su vez
+dentro del directorio `compartidos`, subdirectorio `geo131-pa05`.
 
 ¿Qué significan los valores en las celdas de cada ráster? Tres
 *dataset*, `CGIAR-ELEVACION`, `CHELSA*` (este es un conjunto de
@@ -121,7 +160,7 @@ dejo enlaces a notas específicas de estas fuentes:
   individuales, correspondientes a igual número de variables
   bioclimáticas que podrás consultar en la tabla 7.1 de la página 11 de
   [este
-  PDF](https://chelsa-climate.org/wp-admin/download-page/CHELSA_tech_specification_V2.pdf).
+  PDF](https://chelsa-climate.org/wp-admin/download-page/CHELSA_tech_specification_V21.pdf).
   En la tabla, también podrás consultar el factor de escala y el
   desplazamiento que deberás aplicar para obtener sus valores en las
   unidades correspondientes.
@@ -283,10 +322,11 @@ if (grepl('gfm', output_format)) {
 # Instrucciones generales que aplican a todos los ejercicios.
 
 1.  **La instrucción más importante: tu práctica me la entregarás en
-    papel fotografiado (es preferible un PDF con todas las páginas
-    juntas, hay aplicaciones móviles para esto) y me la puedes enviar
-    por mensaje directo a través del foro. `R` sólo lo usarás para hacer
-    cálculos.**
+    papel, o fotografiando las páginas (en este caso, juntarlas todas en
+    un único PDF, hay aplicaciones móviles para esto) y me la puedes
+    enviar por mensaje directo a través del foro. `R` sólo lo usarás
+    para hacer cálculos. Aclarar además que, como todas las prácticas de
+    aula, ésta ***NO*\*\* se entrega vía GitHub.\*\*
 
 2.  Como se supone que esta práctica está pensada para hacerse en el
     aula, el servidor sólo será un apoyo, y deberías poder operarlo
@@ -294,7 +334,8 @@ if (grepl('gfm', output_format)) {
     tengas que copiar código desde este cuaderno y pegarlo en un script
     de R (en el servidor, `File>New>R Script`). NO tienes que crear un
     proyecto de RStudio. Si hay algún proyecto abierto al momento de
-    comenzar la práctica, ciérralo (`File>Close Project`). En el código
+    comenzar la práctica, ciérralo (`File>Close Project`). Si quieres
+    clonar el repo, perfecto, pero no es imprescindible. En el código
     que dejo de ayuda en cada ejercicio, tendrás que cambiar sólo
     algunas partes; busca siempre la indicación `#<-----Atender aquí`.
 
@@ -303,7 +344,7 @@ if (grepl('gfm', output_format)) {
     (oración 1), cómo lo hiciste (oración 2), qué obtuviste (oración 3)
     y qué interpretas (oración 4).
 
-4.  Elige un número entero entre el 2 y el 20 (anúncialo en el foro,
+4.  Elige un número entero entre el 2 y el 30 (anúncialo en el foro,
     para evitar duplicidad; el 1 se lo reserva el tali), para los
     ejercicios de aleatorización, el cual asignarás al objeto
     `mi_aleatorizacion`.
@@ -313,8 +354,8 @@ mi_aleatorizacion <-  #<-----Atender aquí
 ```
 
 5.  Carga estos paquetes. Si te aparecen errores sobre que esta o
-    aquella función no fue encontrada, o que el operador “%\>%” no fue
-    encontrado, carga estas funciones.
+    aquella función no fue encontrada, o que el operador `%>%` no fue
+    encontrado, carga estos paquetes.
 
 ``` r
 library(sf)
@@ -411,9 +452,8 @@ mismas, algo anda mal):
     ## Estos fueron mis archivos seleccionados
     ## ~/compartidos/geo131-pa05/CGIAR-ELEVACION.tif
     ## ~/compartidos/geo131-pa05/G90-PENDIENTE.tif
-    ## ~/compartidos/geo131-pa05/CHELSA_bio15_1981-2010_V21.tif
-    ## ~/compartidos/geo131-pa05/CHELSA_bio1_1981-2010_V21.tif
-    ## ~/compartidos/geo131-pa05/CHELSA_bio10_1981-2010_V21.tif
+    ## ~/compartidos/geo131-pa05/CHELSA_bio5_1981-2010_V21.tif
+    ## ~/compartidos/geo131-pa05/CHELSA_bio12_1981-2010_V21.tif
 
 Usando tus puntos creados en el ejercicio anterior, extrae los valores
 correspondientes de cada ráster para cada uno de tus 10 puntos. Con el
@@ -467,18 +507,18 @@ Los valores extraídos desde los cinco rásters asignados al tali para sus
 cinco puntos asignados, se verían así (si los tuyos coinciden con estos,
 algo anda mal):
 
-| CGIAR-ELEVACION | G90-PENDIENTE | CHELSA_bio15_1981-2010_V21 | CHELSA_bio1_1981-2010_V21 | CHELSA_bio10_1981-2010_V21 |
-|:---------------:|:-------------:|:--------------------------:|:-------------------------:|:--------------------------:|
-|     1948.86     |     7.09      |            469             |           2882            |            2894            |
-|      42.51      |     0.99      |            371             |           2992            |            3005            |
-|      89.28      |     2.83      |            385             |           2991            |            3004            |
-|      19.13      |     0.65      |            433             |           2989            |            3001            |
-|     654.14      |     5.14      |            495             |           2958            |            2971            |
-|     231.23      |     5.19      |            461             |           2981            |            2992            |
-|     622.91      |     2.14      |            270             |           2951            |            2967            |
-|     238.35      |     3.05      |            273             |           2978            |            2992            |
-|     287.03      |     3.01      |            275             |           2976            |            2994            |
-|     427.51      |     0.62      |            524             |           2975            |            2986            |
+| CGIAR-ELEVACION | G90-PENDIENTE | CHELSA_bio5_1981-2010_V21 | CHELSA_bio12_1981-2010_V21 |
+|:---------------:|:-------------:|:-------------------------:|:--------------------------:|
+|     1948.86     |     7.09      |           2937            |           20517            |
+|      42.51      |     0.99      |           3032            |           12753            |
+|      89.28      |     2.83      |           3032            |           12632            |
+|      19.13      |     0.65      |           3038            |           17195            |
+|     654.14      |     5.14      |           3022            |           10177            |
+|     231.23      |     5.19      |           3020            |            9271            |
+|     622.91      |     2.14      |           3015            |           18219            |
+|     238.35      |     3.05      |           3017            |           26223            |
+|     287.03      |     3.01      |           3050            |           13758            |
+|     427.51      |     0.62      |           3033            |            9359            |
 
 Ahora es necesario convertir los valores de las variables del conjunto
 CHELSA, dado que usan factor de escala y, algunas también tienen
@@ -501,18 +541,18 @@ Los valores extraídos desde los cinco rásters asignados al tali para sus
 cinco puntos asignados, luego de aplicar el escalado y el *offset*, se
 verían así:
 
-| CGIAR-ELEVACION | G90-PENDIENTE | CHELSA_bio15_1981-2010_V21 | CHELSA_bio1_1981-2010_V21 | CHELSA_bio10_1981-2010_V21 |
-|:---------------:|:-------------:|:--------------------------:|:-------------------------:|:--------------------------:|
-|     1948.86     |     7.09      |            46.9            |           15.05           |           16.25            |
-|      42.51      |     0.99      |            37.1            |           26.05           |           27.35            |
-|      89.28      |     2.83      |            38.5            |           25.95           |           27.25            |
-|      19.13      |     0.65      |            43.3            |           25.75           |           26.95            |
-|     654.14      |     5.14      |            49.5            |           22.65           |           23.95            |
-|     231.23      |     5.19      |            46.1            |           24.95           |           26.05            |
-|     622.91      |     2.14      |            27.0            |           21.95           |           23.55            |
-|     238.35      |     3.05      |            27.3            |           24.65           |           26.05            |
-|     287.03      |     3.01      |            27.5            |           24.45           |           26.25            |
-|     427.51      |     0.62      |            52.4            |           24.35           |           25.45            |
+| CGIAR-ELEVACION | G90-PENDIENTE | CHELSA_bio5_1981-2010_V21 | CHELSA_bio12_1981-2010_V21 |
+|:---------------:|:-------------:|:-------------------------:|:--------------------------:|
+|     1948.86     |     7.09      |           20.55           |           2051.7           |
+|      42.51      |     0.99      |           30.05           |           1275.3           |
+|      89.28      |     2.83      |           30.05           |           1263.2           |
+|      19.13      |     0.65      |           30.65           |           1719.5           |
+|     654.14      |     5.14      |           29.05           |           1017.7           |
+|     231.23      |     5.19      |           28.85           |           927.1            |
+|     622.91      |     2.14      |           28.35           |           1821.9           |
+|     238.35      |     3.05      |           28.55           |           2622.3           |
+|     287.03      |     3.01      |           31.85           |           1375.8           |
+|     427.51      |     0.62      |           30.15           |           935.9            |
 
 > Transcribe tu tabla a papel.
 
@@ -544,13 +584,12 @@ Así se vería la matriz de correlación del tali:
 correlacion_inferior %>% knitr::kable()
 ```
 
-|                            | CGIAR-ELEVACION | G90-PENDIENTE | CHELSA_bio15_1981-2010_V21 | CHELSA_bio1_1981-2010_V21 | CHELSA_bio10_1981-2010_V21 |
-|:---------------------------|:----------------|:--------------|:---------------------------|:--------------------------|:---------------------------|
-| CGIAR-ELEVACION            |                 |               |                            |                           |                            |
-| G90-PENDIENTE              | 0.71            |               |                            |                           |                            |
-| CHELSA_bio15_1981-2010_V21 | 0.273           | 0.221         |                            |                           |                            |
-| CHELSA_bio1_1981-2010_V21  | -0.994          | -0.7          | -0.199                     |                           |                            |
-| CHELSA_bio10_1981-2010_V21 | -0.996          | -0.703        | -0.254                     | 0.998                     |                            |
+|                            | CGIAR-ELEVACION | G90-PENDIENTE | CHELSA_bio5_1981-2010_V21 | CHELSA_bio12_1981-2010_V21 |
+|:---------------------------|:----------------|:--------------|:--------------------------|:---------------------------|
+| CGIAR-ELEVACION            |                 |               |                           |                            |
+| G90-PENDIENTE              | 0.71            |               |                           |                            |
+| CHELSA_bio5_1981-2010_V21  | -0.923          | -0.715        |                           |                            |
+| CHELSA_bio12_1981-2010_V21 | 0.28            | 0.1           | -0.421                    |                            |
 
 > Transcribe tu matriz de correlación a papel.
 
@@ -561,23 +600,16 @@ absoluto. Por ejemplo, el valor absoluto de un coeficiente de
 correlación -0.98 es mayor que +0.92.
 
 En el caso del tali, esta parte del ejercicio se haría con las variables
-`CHELSA_bio1_1981-2010_V21` y `CGIAR-ELEVACION`. Estos serían los
+`CHELSA_bio5_1981-2010_V21` y `CGIAR-ELEVACION`. Estos serían los
 vectores:
 
-1.  **CHELSA_bio1_1981-2010_V21**:
-    - 15.05, 26.05, 25.95, 25.75, 22.65, 24.95, 21.95, 24.65, 24.45,
-      24.35
+1.  **CHELSA_bio5_1981-2010_V21**:
+    - 20.55 30.05 30.05 30.65 29.05 28.85 28.35 28.55 31.85 30.15
 2.  **CGIAR-ELEVACION**:
     - 1948.86, 42.51, 89.28, 19.13, 654.14, 231.23, 622.91, 238.35,
       287.03, 427.51
 
-> Nota. Cometí el error de elegir estas dos variables, cuando realmente
-> debí elegir `CHELSA_bio1_1981-2010_V21` y
-> `CHELSA_bio10_1981-2010_V21`, que tienen la correlación con el mayor
-> valor abosluto. Para evitar transformar las demostraciones
-> sensiblemente, dado que ya hay personas elaborando la práctica, no
-> cambiaré la selección de variables, y valga esta nota como fe de
-> erratas. Gracias a Sebatian Bocio por apuntar el error.
+<!-- > Nota. Cometí el error de elegir estas dos variables, cuando realmente debí elegir `CHELSA_bio1_1981-2010_V21` y `CHELSA_bio10_1981-2010_V21`, que tienen la correlación con el mayor valor abosluto. Para evitar transformar las demostraciones sensiblemente, dado que ya hay personas elaborando la práctica, no cambiaré la selección de variables, y valga esta nota como fe de erratas. Gracias a Sebatian Bocio por apuntar el error. -->
 
 A continuación incluyo una demostración de cómo calcular el coeficiente
 de correlación de Pearson son esos vectores.
@@ -602,11 +634,11 @@ donde:
     $\overline{Y}$):
 
 $$
- \overline{X} = \frac{15.05 + 26.05 + \ldots + 24.35}{10}
+ \overline{X} = \frac{20.55 + 30.05 + \ldots + 30.15}{10}
  $$
 
 $$
- \overline{X} = 23.28
+ \overline{X} = 28.81
  $$
 
 $$
@@ -614,7 +646,7 @@ $$
  $$
 
 $$
- \overline{Y} = 456.89
+ \overline{Y} = 456.095
  $$
 
 2.  **Calcular las desviaciones de cada valor respecto a sus medias**:
@@ -622,11 +654,15 @@ $$
     Ejemplo para el primer valor:
 
 $$
- (X_1 - \overline{X}) = 15.05 - 23.28 = -8.23
+ (X_1 - \overline{X}) = 20.55 - 28.81 = -8.26
  $$
 
 $$
- (Y_1 - \overline{Y}) = 1948.86 - 456.89 = 1491.97
+ (Y_1 - \overline{Y}) = 1948.86 - 456.095 = 1492.765
+ $$
+
+$$
+ \ldots
  $$
 
 Repite este cálculo para cada par de valores.
@@ -637,7 +673,7 @@ Repite este cálculo para cada par de valores.
     Para el primer valor:
 
 $$
- (-8.23) \times (1491.97) = -12272.89
+ (-8.26) \times (1492.765) = -12330.24
  $$
 
 Repite este cálculo para todos los pares y luego suma los resultados.
@@ -647,13 +683,13 @@ Repite este cálculo para todos los pares y luego suma los resultados.
     Para $X$:
 
 $$
- (X_1 - \overline{X})^2 = (-8.23)^2 = 67.74
+ (X_1 - \overline{X})^2 = (-8.26)^2 = 67.74
  $$
 
 Para $Y$:
 
 $$
- (Y_1 - \overline{Y})^2 = (1491.97)^2 = 2225812.68
+ (Y_1 - \overline{Y})^2 = (1491.97)^2 = 2225974
  $$
 
 Repite y suma los valores para ambos vectores.
@@ -714,7 +750,7 @@ la consola de R)
 
 ``` r
 var1 <- df_valores_cuan_sel_reales$`CGIAR-ELEVACION` #<-----Atender aquí
-var2 <- df_valores_cuan_sel_reales$`CHELSA_bio1_1981-2010_V21` #<-----Atender aquí
+var2 <- df_valores_cuan_sel_reales$`CHELSA_bio5_1981-2010_V21`  #<-----Atender aquí
 ```
 
 En el caso del tali, el gráfico de dispersión sería este.
@@ -810,12 +846,12 @@ format(mean_x, scientific = F)
 format(mean_y, scientific = F)
 ```
 
-    ## [1] "23.58"
+    ## [1] "NA"
 
 Resultado:
 
 - $\bar{x} = 456.0968567$
-- $\bar{y} = 23.58$
+- $\bar{y} = NA$
 
 3.  Cálculo de los valores necesarios para $\beta_1$ y $\beta_0$
 
@@ -848,7 +884,7 @@ sum_y <- sum(y)
 format(sum_xy, scientific = F)
 ```
 
-    ## [1] "90808.98"
+    ## [1] "0"
 
 ``` r
 format(sum_x_squared, scientific = F)
@@ -866,14 +902,14 @@ format(sum_x, scientific = F)
 format(sum_y, scientific = F)
 ```
 
-    ## [1] "235.8"
+    ## [1] "0"
 
 Resultado:
 
-- $\sum x_i y_i = 90808.98$
+- $\sum x_i y_i = 0$
 - $\sum x_i^2 = 4999568$
 - $\sum x_i = 4560.969$
-- $\sum y_i = 235.8$
+- $\sum y_i = 0$
 
 4.  Cálculo de $\beta_1$ (pendiente)
 
@@ -891,11 +927,11 @@ beta_1 <- (sum_xy - (sum_x * sum_y) / n) / (sum_x_squared - (sum_x^2) / n)
 format(beta_1, scientific = F)
 ```
 
-    ## [1] "-0.005733745"
+    ## [1] "0"
 
 Resultado:
 
-- $\beta_1 = -0.005733745$
+- $\beta_1 = 0$
 
 5.  Cálculo de $\beta_0$ (intercepto)
 
@@ -912,11 +948,11 @@ beta_0 <- mean_y - beta_1 * mean_x
 format(beta_0, scientific = F)
 ```
 
-    ## [1] "26.19514"
+    ## [1] "NA"
 
 Resultado:
 
-- $\beta_0 = 26.19514$
+- $\beta_0 = NA$
 
 6.  Formulación de la ecuación de la recta de regresión
 
@@ -929,7 +965,7 @@ $$
 Sustituyendo los valores calculados:
 
 $$
-\hat{y} = 26.19514 -0.005733745x
+\hat{y} = NA 0x
 $$
 
 ## Resumen
@@ -937,13 +973,22 @@ $$
 La recta de regresión ajustada para estos datos es:
 
 $$
-\hat{y} = 26.1951431 -0.0057337x
+\hat{y} = NA 0x
 $$
 
 > No olvides tu párrafo al final del ejercicio.
 
 <div id="refs" class="references csl-bib-body hanging-indent"
 entry-spacing="0">
+
+<div id="ref-brunphilipp2022" class="csl-entry">
+
+Brun, Philipp, Zimmermann, Niklaus E., Hari, Chantal, Pellissier, Loïc,
+and Karger, Dirk Nikolaus. 2022. “CHELSA-BIOCLIM+ A Novel Set of Global
+Climate-Related Predictors at Kilometre-Resolution.”
+<https://doi.org/10.16904/ENVIDAT.332>.
+
+</div>
 
 <div id="ref-jose_ramon_martinez_batlle_2022_7367180" class="csl-entry">
 

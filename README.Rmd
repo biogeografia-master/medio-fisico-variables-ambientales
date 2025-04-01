@@ -47,20 +47,24 @@ if (grepl('gfm', output_format)) {
 
 # Fecha/hora de entrega
 
-**25 de septiembre de 2024, 11:59 pm.**
+**23 de marzo de 2024, 11:59 pm.**
 
 
 # Introducción
 
 ## "Plantilla geográfica", medio físico, variables ambientales, correlación, regresión
 
-En el contexto de esta asignatura, puedes asumir que estos nombres se refieren a lo mismo: "plantilla geográfica", medio físico, variables ambientales. Todo ecosistema tiene una "parte dura" (que puede ser relativamente estática o dinámica) sobre o dentro de la cual ocurren las interacciones entre especies que conforman nuestra comunidad ecológica. Todos los lugares del planeta disponen, en la actualidad, de alguna forma de información. El objetivo es poder reunir variables de esa "parte dura", y organizarlas en una forma matricial, donde las filas sean "sitios" y las columnas sean "variables"; a este producto le llamaremos "matriz ambiental".
+En el contexto de esta asignatura, puedes asumir que estos nombres se refieren a lo mismo: "plantilla geográfica", medio físico, variables ambientales. Todo ecosistema tiene una "parte dura" (que puede ser relativamente estática o dinámica) sobre o dentro de la cual ocurren las interacciones entre especies que conforman nuestra comunidad ecológica. Todos los lugares del planeta disponen, en la actualidad, de alguna forma de dato ambiental. El objetivo es poder reunir variables de esa "parte dura", y organizarlas en una forma matricial, donde las filas sean "sitios" y las columnas sean "variables"; a este producto le llamaremos "matriz ambiental". Es importante no olvidar lo siguiente: todas las variables que reunamos, deberían ser relevantes para el estudio que se pretende hacer; para delimitar si una variable es o no relevante para el estudio, bastará con mirar los objetivos del estudio, así como el estado del conocimiento sobre las técnicas comúnmenete usadas para satisfacer dichos objetivos. También es importante recordar que no todas las variables que se pueden medir o reunir en fuentes externas son relevantes para un estudio, y no todas las variables relevantes para un estudio se pueden medir o colectar.
 
-Dado que es común que las variables ambientales se correlacionen entre sí, en este ejercicio también es importante identificar la magnitud y dirección de estas correlaciones, ya que pueden influir en la interpretación de los datos y en los resultados de los análisis posteriores. Por ejemplo, una alta correlación entre variables puede indicar redundancia, lo que significa que estas variables están capturando información similar sobre el medio físico. Esto puede llevar a problemas como la multicolinealidad en modelos de regresión, lo que afecta la estabilidad de los coeficientes estimados y su interpretación. Por tanto, evaluar la correlación entre variables es un paso clave para decidir cuáles deben ser incluidas en un análisis más profundo y cuáles pueden ser excluidas o transformadas para mejorar la robustez del modelo.
+Dado que es común que las variables ambientales se correlacionen entre sí, en este ejercicio también es importante identificar la magnitud y dirección de estas correlaciones, ya que pueden influir en la interpretación de los datos y en los resultados de los análisis posteriores. Por ejemplo, una alta correlación entre variables puede indicar redundancia, lo que significa que estas variables están capturando información similar sobre el medio físico. Esto puede llevar a problemas como la multicolinealidad en modelos de regresión, lo que afecta la estabilidad de los coeficientes estimados y su interpretación. Por tanto, evaluar la correlación entre variables es un paso clave para decidir cuáles deben ser incluidas en un análisis más profundo y cuáles pueden ser excluidas o transformadas para mejorar la robustez del modelo. Aunque en este ejercicio no lo verás, existen técnicas para evaluar si existe colinealidad entre las variables incluidas en una regresión (e.g. *variance inflation factor*).
 
-En cuanto a la forma de almacenar los datos sobre variables ambientales, remarco lo estrictamente necesario que debes saber sobre los modelos de datos en información geográfica. Aunque también hay información en el modelo de datos vectorial, la mayor parte de la información del medio físico disponible en repositorios globales de información geoespacial (uno que centraliza mucha información es Google Earth Engine, pero hay varios), se encuentra almacenadas en archivos del modelo de datos ráster. En el caso más simple, un ráster es una matriz de $n$ filas por $m$ columnas, que forman celdas distribuidas de forma regular siguiendo un sistema de coordenadas de referencia, donde cada celda representa el valor de una variable sobre el territorio. Una realización muy popular de los rásters son las "fotos" que capturas con un móvil. No obstante, los rásters que informan sobre el medio físico pueden complicarse "todo lo que queramos". **En un ráster, sólo se almacenan valores numéricos, pero la variable representada puede ser cualitativa o cuantitativa**.
+En cuanto a la forma de almacenar los datos sobre variables ambientales, remarco lo estrictamente necesario que debes saber sobre los modelos de datos en información geográfica. Aunque también hay información geoespacial almacenada en el modelo de datos vectorial, la mayor parte de la información espacialmente continua del medio físico disponible en repositorios globales de información geoespacial (por ejemplo, un repositorio que centraliza mucha información es Google Earth Engine, pero hay varios), se encuentra almacenada en archivos del modelo de datos ráster. En el caso más simple, un ráster es una matriz de $n$ filas por $m$ columnas, que forman celdas distribuidas de forma regular siguiendo un sistema de coordenadas de referencia, donde cada celda representa el valor de una variable sobre el territorio. Una realización muy popular de los rásters son las "fotos" que capturas con un móvil. No obstante, los rásters que informan sobre el medio físico pueden complicarse "todo lo que queramos". **En un ráster, sólo se almacenan valores numéricos, pero la variable representada puede ser cualitativa o cuantitativa**.
 
-Si la variable es cuantitativa, los valores en el ráster se almacenarán de acuerdo a un factor de escala y a un *offset* o desplazamiento. Por ejemplo, supongamos que tienes un valor de temperatura para la capa bioclimática **bio1 (mean annual air temperature)** o **temperatura media anual del aire**, y deseas interpretarlo correctamente en °C.
+Si la variable es cuantitativa, los valores en el ráster se almacenarán de acuerdo a un factor de escala y a un *offset* o desplazamiento. Algunas programas de escritorio (basados en la biblioteca GDAL 2.3 o superior), como las versiones más recientes de QGIS, y paquetes de R, como `stars`, son capaces de reconocer estos parámetros (pues están grabados en el encabezado del archivo ráster), y realizar la conversión por nosotros. Dado que en esta práctica, usarás el paquete `raster`, el cual no reconoce el factor de escala y el *offset*, tendrás que aplicar la corrección por tu cuenta.
+
+> De manera general, en un contexto de producción o análisis de datos, resulta **imprescindible** explorar cualquier ráster antes de realizar operaciones con él. Explorándolo, descubrirás si existen factores de escala y *offset* que deberías aplicar para interpretar correctamente los valores almacenados en las celdas. En la práctica, esto implica abrir el archivo en el programa en el que lo analizarás (como digo, algunos programas identifican la corrección que debe aplicarse, y lo hacen automáticamente, pero otros no), obtener el rango de valores, y consultar la documentación de la fuente de datos para determinar cuáles son los valores de factor de escala y *offset* que deberás usar.
+
+Para comprender cómo usar el factor de escala y el *offset*, pongo a continuación un ejemplo en el que dispones de un valor de temperatura para la capa bioclimática **bio1 (mean annual air temperature)** o **temperatura media anual del aire** del conjunto de datos CHELSA [@brunphilipp2022], y deseas interpretarlo correctamente en °C. Veamos cómo se hacer:
 
 >**Ejemplo:**
 >
@@ -72,7 +76,7 @@ Si la variable es cuantitativa, los valores en el ráster se almacenarán de acu
 >2. **Offset, ajuste o desplazamiento:** Según la tabla, el *offset* es **-273.15**, lo cual convierte el valor de Kelvin a grados Celsius.
    - 290 Kelvin - 273.15 = 16.85 °C
 >
->**Interpretación:** El valor final, **16.85 °C**, representa la temperatura media anual del aire para ese punto geográfico, calculada como el promedio diario a lo largo de un año.
+>**Interpretación:** El valor final, **16.85 °C**, representa la temperatura media anual del aire para ese punto geográfico, estimada como el promedio diario a lo largo de un año.
 >
 
 Por otro lado , si la variable es cualitativa, el ráster de todas formas almacenará valores numéricos, que son realmente códigos representados por enteros positivos (números naturales). En este caso, dispondrás de una tabla de equivalencias para determinar a qué clase corresponde cada código.
@@ -81,13 +85,13 @@ Por otro lado , si la variable es cualitativa, el ráster de todas formas almace
 
 La mayor parte de las fuentes de este ejercicio son ráster. El único vectorial es un límite de tierra firme de República Dominicana, de GADM (investiga qué es GADM). El resto son rásters casi todos recortados para el territorio emergido de República Dominicana.
 
-Todos los archivos se localizan en el directorio `compartidos`, subdirectorio `geo131-pa05` en tu cuenta del servidor RStudio.
+Todos los archivos se encuentran en este mismo repositorio, el cual puedes clonar si lo deseas ya los tendrás disponibles de manera directa. Sin embargo, si estás trabajando en mi servidor RStudio, los archivos fuente se localizan también en tu directorio "casa" (para verlo, navega en el panel de `Files` hasta el directorio del nivel más alto), y su vez dentro del directorio `compartidos`, subdirectorio `geo131-pa05`.
 
 ¿Qué significan los valores en las celdas de cada ráster? Tres *dataset*, `CGIAR-ELEVACION`, `CHELSA*` (este es un conjunto de archivos) y `YINSOLTIME*`, representan variables cuantitativas medidas en números reales. Los otros dos conjuntos, `PROBAV*` y `G90-GEOMORFONOS`, representan variables cualitativas medidas nominalmente. Desde el repositorio [Estadística zonal multipropósito sobre información geoespacial de República Dominicana, usando Google Earth Engine, Python y R](https://github.com/geofis/zonal-statistics) [@jose_ramon_martinez_batlle_2022_7367180] podrás enlazar con las fuentes bibliográficas de cada una de las variables usadas en esta práctica. A continuación te dejo enlaces a notas específicas de estas fuentes:
 
   - `CGIAR-ELEVACION.tif`. **RÁSTER CUANTITATIVO**. El nombre es bastante explícito. Datos de elevación (huecos rellenos), de la Misión Topográfica del Transbordador Shuttle (SRTM) para el globo, versión 4, de la base de datos del CGIAR-CS.
   
-  - `CHELSA*.tif`. **RÁSTERS CUANTITATIVOS**. Se compone de 19 rásters individuales, correspondientes a igual número de variables bioclimáticas que podrás consultar en la tabla 7.1 de la página 11 de [este PDF](https://chelsa-climate.org/wp-admin/download-page/CHELSA_tech_specification_V2.pdf). En la tabla, también podrás consultar el factor de escala y el desplazamiento que deberás aplicar para obtener sus valores en las unidades correspondientes.
+  - `CHELSA*.tif`. **RÁSTERS CUANTITATIVOS**. Se compone de 19 rásters individuales, correspondientes a igual número de variables bioclimáticas que podrás consultar en la tabla 7.1 de la página 11 de [este PDF](https://chelsa-climate.org/wp-admin/download-page/CHELSA_tech_specification_V21.pdf). En la tabla, también podrás consultar el factor de escala y el desplazamiento que deberás aplicar para obtener sus valores en las unidades correspondientes.
 
   - `PROBAV*.tif`. **RÁSTERS CUALITATIVOS**. Cinco rásters de cobertura del suelo del programa Copernicus, cada uno correspondiente a un año entre 2015 y 2019. Consulta la leyenda de la tabla 4 de [este PDF](https://zenodo.org/records/4723921/files/CGLOPS1_PUM_LC100m-V3_I3.4.pdf?download=1)
 
@@ -203,13 +207,13 @@ if (grepl('gfm', output_format)) {
 
 # Instrucciones generales que aplican a todos los ejercicios.
 
-1. **La instrucción más importante: tu práctica me la entregarás en papel fotografiado (es preferible un PDF con todas las páginas juntas, hay aplicaciones móviles para esto) y me la puedes enviar por mensaje directo a través del foro. `R` sólo lo usarás para hacer cálculos.**
+1. **La instrucción más importante: tu práctica me la entregarás en papel, o fotografiando las páginas (en este caso, juntarlas todas en un único PDF, hay aplicaciones móviles para esto) y me la puedes enviar por mensaje directo a través del foro. `R` sólo lo usarás para hacer cálculos. Aclarar además que, como todas las prácticas de aula, ésta ***NO*** se entrega vía GitHub.**
 
-2. Como se supone que esta práctica está pensada para hacerse en el aula, el servidor sólo será un apoyo, y deberías poder operarlo desde el teléfono. Por esta razón, la he diseñado de manera que sólo tengas que copiar código desde este cuaderno y pegarlo en un script de R (en el servidor, `File>New>R Script`). NO tienes que crear un proyecto de RStudio. Si hay algún proyecto abierto al momento de comenzar la práctica, ciérralo (`File>Close Project`). En el código que dejo de ayuda en cada ejercicio, tendrás que cambiar sólo algunas partes; busca siempre la indicación `#<-----Atender aquí`.
+2. Como se supone que esta práctica está pensada para hacerse en el aula, el servidor sólo será un apoyo, y deberías poder operarlo desde el teléfono. Por esta razón, la he diseñado de manera que sólo tengas que copiar código desde este cuaderno y pegarlo en un script de R (en el servidor, `File>New>R Script`). NO tienes que crear un proyecto de RStudio. Si hay algún proyecto abierto al momento de comenzar la práctica, ciérralo (`File>Close Project`). Si quieres clonar el repo, perfecto, pero no es imprescindible. En el código que dejo de ayuda en cada ejercicio, tendrás que cambiar sólo algunas partes; busca siempre la indicación `#<-----Atender aquí`.
 
 3. Al final de cada ejercicio, debes escribir, a mano, un párrafo de mínimo cuatro oraciones, explicando por qué hiciste lo que hiciste (oración 1), cómo lo hiciste (oración 2), qué obtuviste (oración 3) y qué interpretas (oración 4).
 
-4. Elige un número entero entre el 2 y el 20 (anúncialo en el foro, para evitar duplicidad; el 1 se lo reserva el tali), para los ejercicios de aleatorización, el cual asignarás al objeto `mi_aleatorizacion`.
+4. Elige un número entero entre el 2 y el 30 (anúncialo en el foro, para evitar duplicidad; el 1 se lo reserva el tali), para los ejercicios de aleatorización, el cual asignarás al objeto `mi_aleatorizacion`.
 
 ```{r, echo=F, include=F}
 mi_aleatorizacion <-  1
@@ -219,7 +223,7 @@ mi_aleatorizacion <-  1
 mi_aleatorizacion <-  #<-----Atender aquí
 ```
 
-5. Carga estos paquetes. Si te aparecen errores sobre que esta o aquella función no fue encontrada, o que el operador "%>%" no fue encontrado, carga estas funciones.
+5. Carga estos paquetes. Si te aparecen errores sobre que esta o aquella función no fue encontrada, o que el operador `%>%` no fue encontrado, carga estos paquetes.
 
 ```{r}
 library(sf)
@@ -307,9 +311,16 @@ Por ejemplo, al tali le salieron estas variables (si te salieron las mismas, alg
 {set.seed(mi_aleatorizacion)
   fuentes_cuan_sel <- c(
     sample(tipos_var[grepl('G90-PE|CGIAR|YINS', tipos_var$Fuente), 'Fuente'], 2),
-    sample(tipos_var[grepl('CHELSA', tipos_var$Fuente), 'Fuente'], 3))}
+    sample(
+      tipos_var[grepl(
+        paste0('CHELSA_bio', 1:11, '_', collapse = '|'),
+        tipos_var$Fuente), 'Fuente'], 1),
+    sample(
+      tipos_var[grepl(
+        paste0('CHELSA_bio', 12:19, '_', collapse = '|'),
+        tipos_var$Fuente), 'Fuente'], 1)
+    )}
 cat('Estos fueron mis archivos seleccionados', fuentes_cuan_sel, sep = '\n')
-
 ```
 
 Usando tus puntos creados en el ejercicio anterior, extrae los valores correspondientes de cada ráster para cada uno de tus 10 puntos. Con el código de abajo lo podrás hacer. NECESARIO: investiga sobre las funciones `*apply` y los bucles `for`; te mostraré cómo extraer hacer la extracción de valores desde tus cinco ráster de manera masiva, tanto con `*apply` como con bucle `for`.
@@ -416,15 +427,15 @@ correlacion_inferior %>% knitr::kable()
 
 Ahora reproduce, con cálculos manuales (en papel, papelito, papelito, "♪...me tumba con papelito...♪"), el valor del coeficiente de correlación de Pearson obtenido para el par de variables que obtuvo mayor valor absoluto. Por ejemplo, el valor absoluto de un coeficiente de correlación -0.98 es mayor que +0.92.
 
-En el caso del tali, esta parte del ejercicio se haría con las variables `CHELSA_bio1_1981-2010_V21` y `CGIAR-ELEVACION`. Estos serían los vectores:
+En el caso del tali, esta parte del ejercicio se haría con las variables `CHELSA_bio5_1981-2010_V21` y `CGIAR-ELEVACION`. Estos serían los vectores:
 
-1. **CHELSA_bio1_1981-2010_V21**:
-   - 15.05, 26.05, 25.95, 25.75, 22.65, 24.95, 21.95, 24.65, 24.45, 24.35
+1. **CHELSA_bio5_1981-2010_V21**:
+   - 20.55 30.05 30.05 30.65 29.05 28.85 28.35 28.55 31.85 30.15
 
 2. **CGIAR-ELEVACION**:
    - 1948.86, 42.51, 89.28, 19.13, 654.14, 231.23, 622.91, 238.35, 287.03, 427.51
 
-> Nota. Cometí el error de elegir estas dos variables, cuando realmente debí elegir `CHELSA_bio1_1981-2010_V21` y `CHELSA_bio10_1981-2010_V21`, que tienen la correlación con el mayor valor abosluto. Para evitar transformar las demostraciones sensiblemente, dado que ya hay personas elaborando la práctica, no cambiaré la selección de variables, y valga esta nota como fe de erratas. Gracias a Sebatian Bocio por apuntar el error.
+<!-- > Nota. Cometí el error de elegir estas dos variables, cuando realmente debí elegir `CHELSA_bio1_1981-2010_V21` y `CHELSA_bio10_1981-2010_V21`, que tienen la correlación con el mayor valor abosluto. Para evitar transformar las demostraciones sensiblemente, dado que ya hay personas elaborando la práctica, no cambiaré la selección de variables, y valga esta nota como fe de erratas. Gracias a Sebatian Bocio por apuntar el error. -->
 
 A continuación incluyo una demostración de cómo calcular el coeficiente de correlación de Pearson son esos vectores.
 
@@ -446,11 +457,11 @@ donde:
 1. **Calcular las medias de los vectores** (\( \overline{X} \) y \( \overline{Y} \)):
 
  \[
- \overline{X} = \frac{15.05 + 26.05 + \ldots + 24.35}{10}
+ \overline{X} = \frac{20.55 + 30.05 + \ldots + 30.15}{10}
  \]
 
  \[
- \overline{X} = 23.28
+ \overline{X} = 28.81
  \]
 
  \[
@@ -458,7 +469,7 @@ donde:
  \]
 
  \[
- \overline{Y} = 456.89
+ \overline{Y} = 456.095
  \]
 
 2. **Calcular las desviaciones de cada valor respecto a sus medias**:
@@ -466,21 +477,36 @@ donde:
    Ejemplo para el primer valor:
    
  \[
- (X_1 - \overline{X}) = 15.05 - 23.28 = -8.23
+ (X_1 - \overline{X}) = 20.55 - 28.81 = -8.26
  \]
 
  \[
- (Y_1 - \overline{Y}) = 1948.86 - 456.89 = 1491.97
+ (Y_1 - \overline{Y}) = 1948.86 - 456.095 = 1492.765
+ \]
+
+ \[
+ \ldots
  \]
 
    Repite este cálculo para cada par de valores.
+
+
+
+
+
+
+
+
+
+
+
 
 3. **Calcular los productos de las desviaciones** \((X_i - \overline{X})(Y_i - \overline{Y})\):
 
    Para el primer valor:
 
  \[
- (-8.23) \times (1491.97) = -12272.89
+ (-8.26) \times (1492.765) = -12330.24
  \]
 
    Repite este cálculo para todos los pares y luego suma los resultados.
@@ -490,13 +516,13 @@ donde:
    Para \( X \):
 
  \[
- (X_1 - \overline{X})^2 = (-8.23)^2 = 67.74
+ (X_1 - \overline{X})^2 = (-8.26)^2 = 67.74
  \]
 
    Para \( Y \):
 
  \[
- (Y_1 - \overline{Y})^2 = (1491.97)^2 = 2225812.68
+ (Y_1 - \overline{Y})^2 = (1491.97)^2 = 2225974
  \]
 
    Repite y suma los valores para ambos vectores.
@@ -545,7 +571,7 @@ Puedes usar los bloques de código de abajo, sustituyendo por tus variables, par
 
 ```{r}
 var1 <- df_valores_cuan_sel_reales$`CGIAR-ELEVACION` #<-----Atender aquí
-var2 <- df_valores_cuan_sel_reales$`CHELSA_bio1_1981-2010_V21` #<-----Atender aquí
+var2 <- df_valores_cuan_sel_reales$`CHELSA_bio5_1981-2010_V21`  #<-----Atender aquí
 ```
 
 En el caso del tali, el gráfico de dispersión sería este. 
