@@ -1,16 +1,16 @@
-Prácticas de aula (PA05): Medio físico, variables ambientales,
-correlación y regresión<small><br>Biogeografía (GEO-131)<br>Universidad
-Autónoma de Santo Domingo (UASD)<br>Semestre 2024-02</small>
+Práctica de aula: Medio físico, variables ambientales, correlación y
+regresión<small><br>Biogeografía (GEO-131)<br>Universidad Autónoma de
+Santo Domingo (UASD)</small>
 ================
 El Tali
-2025-04-01
+2025-09-09
 
 Versión HTML (quizá más legible),
 [aquí](https://biogeografia-master.github.io/medio-fisico-variables-ambientales/README.html)
 
 # Fecha/hora de entrega
 
-**23 de marzo de 2024, 11:59 pm.**
+**Ver portal de la asignatura**
 
 # Introducción
 
@@ -326,25 +326,31 @@ if (grepl('gfm', output_format)) {
     un único PDF, hay aplicaciones móviles para esto) y me la puedes
     enviar por mensaje directo a través del foro. `R` sólo lo usarás
     para hacer cálculos. Aclarar además que, como todas las prácticas de
-    aula, ésta ***NO*\*\* se entrega vía GitHub.\*\*
+    aula, ésta *NO* se entrega vía GitHub**. Ese es mi deseo, que
+    entregues en papel, peeeeeeeeeeeeeeeeeero, ya sé que viene por ahí
+    la consulta “podemos entregarla en digital”. Mi respuesta es “okey,
+    sí, ’ta bien”; sin embargo, como la práctica se hará en parte en el
+    aula, en parte en casa, pediré que me presentes los resultados en la
+    clase siguiente.
 
 2.  Como se supone que esta práctica está pensada para hacerse en el
-    aula, el servidor sólo será un apoyo, y deberías poder operarlo
-    desde el teléfono. Por esta razón, la he diseñado de manera que sólo
-    tengas que copiar código desde este cuaderno y pegarlo en un script
-    de R (en el servidor, `File>New>R Script`). NO tienes que crear un
-    proyecto de RStudio. Si hay algún proyecto abierto al momento de
-    comenzar la práctica, ciérralo (`File>Close Project`). Si quieres
-    clonar el repo, perfecto, pero no es imprescindible. En el código
-    que dejo de ayuda en cada ejercicio, tendrás que cambiar sólo
-    algunas partes; busca siempre la indicación `#<-----Atender aquí`.
+    aula (al menos parcialmente), el servidor sólo será un apoyo, y
+    deberías poder operarlo desde el teléfono. Por esta razón, la he
+    diseñado de manera que sólo tengas que copiar código desde este
+    cuaderno y pegarlo en un script de R (en el servidor,
+    `File>New>R Script`). NO tienes que crear un proyecto de RStudio. Si
+    hay algún proyecto abierto al momento de comenzar la práctica,
+    ciérralo (`File>Close Project`). Si quieres clonar el repo,
+    perfecto, pero no es imprescindible. En el código que dejo de ayuda
+    en cada ejercicio, tendrás que cambiar sólo algunas partes; busca
+    siempre la indicación `#<-----Atender aquí`.
 
 3.  Al final de cada ejercicio, debes escribir, a mano, un párrafo de
     mínimo cuatro oraciones, explicando por qué hiciste lo que hiciste
     (oración 1), cómo lo hiciste (oración 2), qué obtuviste (oración 3)
     y qué interpretas (oración 4).
 
-4.  Elige un número entero entre el 2 y el 30 (anúncialo en el foro,
+4.  Elige un número entero entre el 61 y el 90 (anúncialo en el foro,
     para evitar duplicidad; el 1 se lo reserva el tali), para los
     ejercicios de aleatorización, el cual asignarás al objeto
     `mi_aleatorizacion`.
