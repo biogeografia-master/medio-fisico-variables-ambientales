@@ -351,9 +351,8 @@ if (grepl('gfm', output_format)) {
     y qué interpretas (oración 4).
 
 4.  Elige un número entero entre el 61 y el 90 (anúncialo en el foro,
-    para evitar duplicidad; el 1 se lo reserva el tali), para los
-    ejercicios de aleatorización, el cual asignarás al objeto
-    `mi_aleatorizacion`.
+    para evitar duplicidad), para los ejercicios de aleatorización, el
+    cual asignarás al objeto `mi_aleatorizacion`.
 
 ``` r
 mi_aleatorizacion <-  #<-----Atender aquí

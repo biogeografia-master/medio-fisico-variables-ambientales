@@ -212,7 +212,7 @@ if (grepl('gfm', output_format)) {
 
 3. Al final de cada ejercicio, debes escribir, a mano, un párrafo de mínimo cuatro oraciones, explicando por qué hiciste lo que hiciste (oración 1), cómo lo hiciste (oración 2), qué obtuviste (oración 3) y qué interpretas (oración 4).
 
-4. Elige un número entero entre el 61 y el 90 (anúncialo en el foro, para evitar duplicidad; el 1 se lo reserva el tali), para los ejercicios de aleatorización, el cual asignarás al objeto `mi_aleatorizacion`.
+4. Elige un número entero entre el 61 y el 90 (anúncialo en el foro, para evitar duplicidad), para los ejercicios de aleatorización, el cual asignarás al objeto `mi_aleatorizacion`.
 
 ```{r, echo=F, include=F}
 mi_aleatorizacion <-  1
