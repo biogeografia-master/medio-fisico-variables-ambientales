@@ -3,7 +3,7 @@ regresión<small><br>Biogeografía (GEO-131)<br>Universidad Autónoma de
 Santo Domingo (UASD)</small>
 ================
 El Tali
-2025-09-09
+2025-09-23
 
 Versión HTML (quizá más legible),
 [aquí](https://biogeografia-master.github.io/medio-fisico-variables-ambientales/README.html)
@@ -210,42 +210,41 @@ dejo enlaces a notas específicas de estas fuentes:
 ``` r
 tipos_var <- data.frame(
   Fuente = list.files('~/compartidos/geo131-pa05', pattern = '*tif', full.names = T)) %>% 
-  mutate(Fuente = gsub('/home/jose', '~', Fuente)) %>% 
   mutate(Tipo = ifelse(grepl('PROBA|G90-GEOM', Fuente), 'Cualitativa', 'Cuantitativa'))
 tipos_var %>% 
   knitr::kable()
 ```
 
-| Fuente                                                                | Tipo         |
-|:----------------------------------------------------------------------|:-------------|
-| ~/compartidos/geo131-pa05/CGIAR-ELEVACION.tif                         | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio1_1981-2010_V21.tif               | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio10_1981-2010_V21.tif              | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio11_1981-2010_V21.tif              | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio12_1981-2010_V21.tif              | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio13_1981-2010_V21.tif              | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio14_1981-2010_V21.tif              | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio15_1981-2010_V21.tif              | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio16_1981-2010_V21.tif              | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio17_1981-2010_V21.tif              | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio18_1981-2010_V21.tif              | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio19_1981-2010_V21.tif              | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio2_1981-2010_V21.tif               | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio3_1981-2010_V21.tif               | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio4_1981-2010_V21.tif               | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio5_1981-2010_V21.tif               | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio6_1981-2010_V21.tif               | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio7_1981-2010_V21.tif               | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio8_1981-2010_V21.tif               | Cuantitativa |
-| ~/compartidos/geo131-pa05/CHELSA_bio9_1981-2010_V21.tif               | Cuantitativa |
-| ~/compartidos/geo131-pa05/G90-GEOMORFONOS.tif                         | Cualitativa  |
-| ~/compartidos/geo131-pa05/G90-PENDIENTE.tif                           | Cuantitativa |
-| ~/compartidos/geo131-pa05/PROBAV_2015.tif                             | Cualitativa  |
-| ~/compartidos/geo131-pa05/PROBAV_2016.tif                             | Cualitativa  |
-| ~/compartidos/geo131-pa05/PROBAV_2017.tif                             | Cualitativa  |
-| ~/compartidos/geo131-pa05/PROBAV_2018.tif                             | Cualitativa  |
-| ~/compartidos/geo131-pa05/PROBAV_2019.tif                             | Cualitativa  |
-| ~/compartidos/geo131-pa05/YINSOLTIME-horas_insolacion_topografica.tif | Cuantitativa |
+| Fuente                                                                         | Tipo         |
+|:-------------------------------------------------------------------------------|:-------------|
+| /home/jose/compartidos/geo131-pa05/CGIAR-ELEVACION.tif                         | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio1_1981-2010_V21.tif               | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio10_1981-2010_V21.tif              | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio11_1981-2010_V21.tif              | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio12_1981-2010_V21.tif              | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio13_1981-2010_V21.tif              | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio14_1981-2010_V21.tif              | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio15_1981-2010_V21.tif              | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio16_1981-2010_V21.tif              | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio17_1981-2010_V21.tif              | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio18_1981-2010_V21.tif              | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio19_1981-2010_V21.tif              | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio2_1981-2010_V21.tif               | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio3_1981-2010_V21.tif               | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio4_1981-2010_V21.tif               | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio5_1981-2010_V21.tif               | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio6_1981-2010_V21.tif               | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio7_1981-2010_V21.tif               | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio8_1981-2010_V21.tif               | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/CHELSA_bio9_1981-2010_V21.tif               | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/G90-GEOMORFONOS.tif                         | Cualitativa  |
+| /home/jose/compartidos/geo131-pa05/G90-PENDIENTE.tif                           | Cuantitativa |
+| /home/jose/compartidos/geo131-pa05/PROBAV_2015.tif                             | Cualitativa  |
+| /home/jose/compartidos/geo131-pa05/PROBAV_2016.tif                             | Cualitativa  |
+| /home/jose/compartidos/geo131-pa05/PROBAV_2017.tif                             | Cualitativa  |
+| /home/jose/compartidos/geo131-pa05/PROBAV_2018.tif                             | Cualitativa  |
+| /home/jose/compartidos/geo131-pa05/PROBAV_2019.tif                             | Cualitativa  |
+| /home/jose/compartidos/geo131-pa05/YINSOLTIME-horas_insolacion_topografica.tif | Cuantitativa |
 
 Con fines demostrativos, voy a representar un mapa de coberturas con `R`
 usando la fuente de PROBA-V. Primero cargaré paquetes, y luego haré la
@@ -455,10 +454,10 @@ Por ejemplo, al tali le salieron estas variables (si te salieron las
 mismas, algo anda mal):
 
     ## Estos fueron mis archivos seleccionados
-    ## ~/compartidos/geo131-pa05/CGIAR-ELEVACION.tif
-    ## ~/compartidos/geo131-pa05/G90-PENDIENTE.tif
-    ## ~/compartidos/geo131-pa05/CHELSA_bio5_1981-2010_V21.tif
-    ## ~/compartidos/geo131-pa05/CHELSA_bio12_1981-2010_V21.tif
+    ## /home/jose/compartidos/geo131-pa05/CGIAR-ELEVACION.tif
+    ## /home/jose/compartidos/geo131-pa05/G90-PENDIENTE.tif
+    ## /home/jose/compartidos/geo131-pa05/CHELSA_bio5_1981-2010_V21.tif
+    ## /home/jose/compartidos/geo131-pa05/CHELSA_bio12_1981-2010_V21.tif
 
 Usando tus puntos creados en el ejercicio anterior, extrae los valores
 correspondientes de cada ráster para cada uno de tus 10 puntos. Con el

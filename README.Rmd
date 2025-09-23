@@ -133,7 +133,6 @@ tabla_fuentes %>%
 ```{r}
 tipos_var <- data.frame(
   Fuente = list.files('~/compartidos/geo131-pa05', pattern = '*tif', full.names = T)) %>% 
-  mutate(Fuente = gsub('/home/jose', '~', Fuente)) %>% 
   mutate(Tipo = ifelse(grepl('PROBA|G90-GEOM', Fuente), 'Cualitativa', 'Cuantitativa'))
 tipos_var %>% 
   knitr::kable()
